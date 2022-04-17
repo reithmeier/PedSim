@@ -5,3 +5,5 @@ coverage
 black
 pylint
 pytest-cov
+numpy
+matplotlib

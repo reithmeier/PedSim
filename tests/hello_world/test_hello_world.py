@@ -16,7 +16,7 @@ def test_world():
     assert res == "Hello World"
 
 
-def test_hello():
+def test_hello(a):
     # given
     hw = HelloWorld()
 
