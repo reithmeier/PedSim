@@ -3,26 +3,29 @@ Simulator tests
 """
 import math
 
-from simulate import Simulator
-
 import numpy as np
-from simulate.kernels import PredatorPreyKernel
+
+from simulate import Simulator
+from simulate.kernels import Kernel, PredatorPreyKernel
 
 
-class SimpleKernel:
+class SimpleKernel(Kernel):
     def __init__(self):
         self.__val = 0
 
     def callback(self, t, t_step):
         self.__val += t_step
 
-        return np.array([self.__val])
+        return np.array([t, self.__val])
+
+    def labels(self):
+        return {"step": 0, "val": 1}
 
 
 def test_simple_model():
     # given
     simple_kernel = SimpleKernel()
-    sim = Simulator(simple_kernel.callback, 0.01, 10)
+    sim = Simulator(simple_kernel, 0.01, 10)
 
     # when
     sim.run()
@@ -37,7 +40,7 @@ def test_simple_model():
 def test_predator_prey_no_throw():
     # given
     predator_prey = PredatorPreyKernel()
-    sim = Simulator(predator_prey.callback, 0.01, 100)
+    sim = Simulator(predator_prey, 0.01, 100)
 
     # when
     sim.run()

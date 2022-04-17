@@ -1,30 +1,35 @@
 """
 Example - Predator Prey Model
 """
-from simulate import Simulator
-from simulate.kernels import PredatorPreyKernel
 
 import matplotlib.pyplot as plt
+
+from simulate import Simulator
+from simulate.kernels import PredatorPreyKernel
 
 
 def main():
     """
     Simulate using default Predator Prey Kernel
     """
-    predator_prey = PredatorPreyKernel()
-    sim = Simulator(predator_prey.callback, t_step=0.01, t_max=100)
+    predator_prey = PredatorPreyKernel(
+        alpha=0.4, beta=0.008, gamma=0.3, delta=0.001, start_prey=500, start_predators=5
+    )
+    sim = Simulator(predator_prey, t_step=0.01, t_max=100)
 
     sim.run()
     result = sim.progress()
 
-    steps = result[:, 0]
-    prey = result[:, 1]
-    predators = result[:, 2]
+    labels = predator_prey.labels()
+
+    steps = result[:, labels["step"]]
+    prey = result[:, labels["prey"]]
+    predators = result[:, labels["predator"]]
 
     fig = plt.figure()
-    ax = fig.add_subplot()
-    ax.plot(steps, prey, color="tab:blue")
-    ax.plot(steps, predators, color="tab:orange")
+    axis = fig.add_subplot()
+    axis.plot(steps, prey, color="tab:blue")
+    axis.plot(steps, predators, color="tab:orange")
 
     plt.show()
 
