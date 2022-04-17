@@ -1,0 +1,7 @@
+setuptools
+tox
+pytest
+coverage
+black
+pylint
+pytest-cov
