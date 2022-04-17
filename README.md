@@ -1,8 +1,8 @@
 # PythonArchetype
 
-[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/reithmeier/PythonArchetype/blob/main/LICENSE)
-[![Python Tests](https://github.com/reithmeier/PythonArchetype/workflows/Python%20Tests/badge.svg)](https://github.com/reithmeier/PythonArchetype/actions/workflows/python-tests.yml)
-[![CodeQL](https://github.com/reithmeier/PythonArchetype/workflows/CodeQL/badge.svg)](https://github.com/reithmeier/PythonArchetype/actions/workflows/codeql-analysis.yml)
+[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/reithmeier/PedSim/blob/main/LICENSE)
+[![Python Tests](https://github.com/reithmeier/PedSim/workflows/Python%20Tests/badge.svg)](https://github.com/reithmeier/PedSim/actions/workflows/python-tests.yml)
+[![CodeQL](https://github.com/reithmeier/PedSim/workflows/CodeQL/badge.svg)](https://github.com/reithmeier/PedSim/actions/workflows/codeql-analysis.yml)
 
 
 ## Description
