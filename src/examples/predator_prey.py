@@ -15,7 +15,7 @@ def main():
     predator_prey = PredatorPreyKernel(
         alpha=0.4, beta=0.008, gamma=0.3, delta=0.001, start_prey=500, start_predators=5
     )
-    sim = Simulator(predator_prey, t_step=0.01, t_max=100)
+    sim = Simulator(predator_prey, step_size=0.01, max_steps=100)
 
     sim.run()
     result = sim.progress()

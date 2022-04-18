@@ -15,15 +15,15 @@ class Simulator:
     using continuous simulation
     """
 
-    def __init__(self, kernel: Kernel, t_step: float, t_max: float):
+    def __init__(self, kernel: Kernel, step_size: float, max_steps: float):
         """
         :param kernel: simulation kernel
-        :param t_step: step size
-        :param t_max: maximum step
+        :param step_size: step size
+        :param max_steps: maximum step
         """
-        self.__callback = kernel.callback
-        self.__step_size = t_step
-        self.__max_steps = t_max
+        self.__callback = kernel.simulate
+        self.__step_size = step_size
+        self.__max_steps = max_steps
         self.__progress: List[np.ndarray] = []
 
     def run(self) -> None:

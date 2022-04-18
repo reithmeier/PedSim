@@ -15,15 +15,13 @@ class SimpleKernel(Kernel):
     """
 
     def __init__(self):
+        super().__init__(labels={"step": 0, "val": 1})
         self.__val = 0
 
-    def callback(self, t, t_step):
-        self.__val += t_step
+    def simulate(self, step, step_size):
+        self.__val += step_size
 
-        return np.array([t, self.__val])
-
-    def labels(self):
-        return {"step": 0, "val": 1}
+        return np.array([step, self.__val])
 
 
 def test_simple_model():

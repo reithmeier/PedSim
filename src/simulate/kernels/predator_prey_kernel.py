@@ -29,36 +29,30 @@ class PredatorPreyKernel(Kernel):
         :param start_prey: initial number of prey animals
         :param start_predators: initial number of perdator animals
         """
+        super().__init__(labels={"step": 0, "prey": 1, "predator": 2})
         self.__alpha = alpha
         self.__beta = beta
         self.__gamma = gamma
         self.__delta = delta
         self.__prey = start_prey  # prey
         self.__predators = start_predators  # predators
-        self.__labels = {"step": 0, "prey": 1, "predator": 2}
 
-    def callback(self, t, t_step) -> np.ndarray:
+    def simulate(self, step, step_size) -> np.ndarray:
         """
         simulates a predator prey model
-        :param t: current step
-        :param t_step: step size
+        :param step: current step
+        :param step_size: step size
         :return: recordings [prey, predator]
         """
-        delta_prey = (
+        diff_prey = (
             self.__alpha * self.__prey - self.__beta * self.__prey * self.__predators
         )
-        delta_predators = (
+        diff_predators = (
             -self.__gamma * self.__predators
             + self.__delta * self.__prey * self.__predators
         )
 
-        self.__prey += delta_prey * t_step
-        self.__predators += delta_predators * t_step
+        self.__prey += diff_prey * step_size
+        self.__predators += diff_predators * step_size
 
-        return np.array([t, self.__prey, self.__predators])
-
-    def labels(self) -> dict:
-        """
-        :return: labels of recordings and their indices in the recordings
-        """
-        return self.__labels
+        return np.array([step, self.__prey, self.__predators])
