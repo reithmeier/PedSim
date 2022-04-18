@@ -5,7 +5,7 @@ import numpy as np
 import pytest
 
 from simulate.integrators import integration_methods
-from simulate.models import (Model, LogisticGrowthModel, PredatorPreyModel,
+from simulate.models import (LogisticGrowthModel, Model, PredatorPreyModel,
                              SIRModel)
 
 

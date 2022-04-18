@@ -1,19 +1,35 @@
-# PythonArchetype
+# PedSim
 
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/reithmeier/PedSim/blob/main/LICENSE)
 [![Python Tests](https://github.com/reithmeier/PedSim/workflows/Python%20Tests/badge.svg)](https://github.com/reithmeier/PedSim/actions/workflows/python-tests.yml)
 [![CodeQL](https://github.com/reithmeier/PedSim/workflows/CodeQL/badge.svg)](https://github.com/reithmeier/PedSim/actions/workflows/codeql-analysis.yml)
 
-
 ## Description
 
-Archetype python project that contains the packages
-* black
-* pylint
-* pytest
-* coverage
+Pedestrian Simulation in python.
 
-in addition to a `tox.ini` configuration and a github CodeQL configuration.
+### Features
+
+Continuous Simulation using numeric integration. The simulation can be configured using different models and different
+integration method.
+
+Supported simulation models:
+
+* Logistic growth model
+* Predator prey model
+* SIR model
+
+Supported numeric integration methods:
+
+* Euler's method
+* Heun's method
+* Runge's & Kutta's method
+
+### What is still missing?
+
+* Actor-based simulation
+* Pedestrian simulation models
+    * Social force model
 
 ## Requirements
 
@@ -23,31 +39,76 @@ in addition to a `tox.ini` configuration and a github CodeQL configuration.
 ## Usage
 
 Install Requirements
+
 ````shell
 pip install -r requirements.txt
 ````
 
 Install this project
+
 ````shell
 pip install -e .
 ````
 
 Start tox
+
 ````shell
 tox
 ````
 
+### Try the examples
 
-## Try the examples
-
-### Requirements
+#### Requirements
 
 * jupyter notebook
 
-### View the examples
+#### View the examples
 
-Use the jupyter notebook using 
+Use the jupyter notebook using
+
 ````shell
 jupyter notebook
 ````
+
 Example notebooks are located in `./examples`
+
+### Write your own simulation model
+
+````python
+import numpy as np
+from simulate.models import Model
+
+
+# inherit from Model
+class MyModel(Model):
+
+    # override __init__
+    def __init__(
+            self,
+            integrator: callable,
+            my_param: float,
+            my_start_value: float
+    ):
+        # labels dictionary maps from label to position in the result of simulate()
+        super().__init__(
+            integrator=integrator, labels={"step": 0, "my_value": 1}
+        )
+        self.__my_param = my_param
+        self.__my_value = my_start_value
+
+    # override simulate
+    def simulate(self, step: float, step_size: float) -> np.ndarray:
+        # use the integrator to determine the next value
+        self.__my_value = self._integrator(
+            self.__my_value,
+            # use a custom function to calculate the difference to the next value
+            lambda my_value: self.__my_param * my_value,
+            step_size,
+        )
+
+        # labels must match this return value
+        return np.array([step, self.__my_value])
+````
+
+
+
