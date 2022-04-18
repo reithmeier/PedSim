@@ -6,16 +6,22 @@ import math
 import numpy as np
 
 from simulate import Simulator
+from simulate.integrators import integration_methods
 from simulate.kernels import Kernel, PredatorPreyKernel
 
 
-class SimpleKernel(Kernel):
+def integrate(current: float, delta: float, step_size: float) -> float:
+    """sample integration method"""
+    return current + delta * step_size
+
+
+class SampleKernel(Kernel):
     """
-    Simple Kernel
+    Sample Kernel
     """
 
     def __init__(self):
-        super().__init__(labels={"step": 0, "val": 1})
+        super().__init__(integrator=integrate, labels={"step": 0, "val": 1})
         self.__val = 0
 
     def simulate(self, step, step_size):
@@ -27,10 +33,9 @@ class SimpleKernel(Kernel):
 def test_simple_model():
     """
     test simulator with the SimpleKernel
-    :return:
     """
     # given
-    simple_kernel = SimpleKernel()
+    simple_kernel = SampleKernel()
     sim = Simulator(simple_kernel, 0.01, 10)
 
     # when
@@ -46,10 +51,9 @@ def test_simple_model():
 def test_predator_prey_no_throw():
     """
     Test Simulator using PredatorPreyKernel
-    :return:
     """
     # given
-    predator_prey = PredatorPreyKernel()
+    predator_prey = PredatorPreyKernel(integrator=integration_methods.euler)
     sim = Simulator(predator_prey, 0.01, 100)
 
     # when

@@ -10,21 +10,26 @@ class Kernel:
     Kernel base class
     """
 
-    def __init__(self, labels=None) -> None:
+    def __init__(self, integrator: callable, labels: dict = None) -> None:
+        """
+        :param labels: dictionary with label names \
+                and corresponding index in the simulation result
+        """
+        self._integrator = integrator
+
         if labels is None:
-            labels = {"t": 0, "val": 1}
+            labels = {"step": 0, "val": 1}
         self.__labels = labels
-        self.__val = 0.0
 
     def simulate(self, step: float, step_size: float) -> np.ndarray:
         """
+        Override this method
         simulate one step
-        :param step: current step
         :param step_size: step size
+        :param step: current step
         :return: recordings, packed in a numpy ndarray
         """
-        self.__val += step_size
-        return np.array([step, self.__val])
+        raise NotImplementedError
 
     def labels(self) -> dict:
         """

@@ -21,8 +21,8 @@ class Simulator:
         :param step_size: step size
         :param max_steps: maximum step
         """
-        self.__callback = kernel.simulate
         self.__step_size = step_size
+        self.__kernel = kernel
         self.__max_steps = max_steps
         self.__progress: List[np.ndarray] = []
 
@@ -33,7 +33,7 @@ class Simulator:
         """
         for t in np.arange(0, self.__max_steps, self.__step_size):
             # evaluate step
-            current_state = self.__callback(t, self.__step_size)
+            current_state = self.__kernel.simulate(t, self.__step_size)
             # record step
             self.__progress.append(current_state)
 
