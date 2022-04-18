@@ -1,13 +1,13 @@
 """
-Kernel
+Model
 """
 
 import numpy as np
 
 
-class Kernel:
+class Model:
     """
-    Kernel base class
+    Model base class
     """
 
     def __init__(self, integrator: callable, labels: dict = None) -> None:

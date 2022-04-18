@@ -5,8 +5,8 @@ import numpy as np
 import pytest
 
 from simulate.integrators import integration_methods
-from simulate.kernels import (Kernel, LogisticGrowthKernel, PredatorPreyKernel,
-                              SIRKernel)
+from simulate.models import (Model, LogisticGrowthModel, PredatorPreyModel,
+                             SIRModel)
 
 
 def integrate(current: float, delta: float, step_size: float) -> float:
@@ -19,7 +19,7 @@ def test_kernel_init():
     # given
     expected = {"a": 1}
     # when
-    kernel = Kernel(integrator=integrate, labels={"a": 1})
+    kernel = Model(integrator=integrate, labels={"a": 1})
     result = kernel.labels()
     # then
     assert result == expected
@@ -36,7 +36,7 @@ def test_kernel_init():
 def test_kernel(step, step_size):
     """Initialize a default Kernel"""
     # given
-    kernel = Kernel(integrator=integrate)
+    kernel = Model(integrator=integrate)
     # when
     # then
     with pytest.raises(NotImplementedError):
@@ -47,7 +47,7 @@ def test_predator_prey_kernel_labels():
     """valid inputs"""
     # given
     expected = {"step": 0, "prey": 1, "predator": 2}
-    kernel = PredatorPreyKernel(integrator=integration_methods.euler)
+    kernel = PredatorPreyModel(integrator=integration_methods.euler)
     # when
     result = kernel.labels()
     # then
@@ -64,7 +64,7 @@ def test_predator_prey_kernel_labels():
 def test_predator_prey_kernel_callback(step, step_size, expected):
     """valid inputs"""
     # given
-    kernel = PredatorPreyKernel(integration_methods.euler)
+    kernel = PredatorPreyModel(integration_methods.euler)
     # when
     result = kernel.simulate(step, step_size)
     # then
@@ -75,7 +75,7 @@ def test_logistic_growth_kernel_labels():
     """valid inputs"""
     # given
     expected = {"step": 0, "value": 1}
-    kernel = LogisticGrowthKernel(integrator=integration_methods.euler)
+    kernel = LogisticGrowthModel(integrator=integration_methods.euler)
     # when
     result = kernel.labels()
     # then
@@ -92,7 +92,7 @@ def test_logistic_growth_kernel_labels():
 def test_logistic_growth_kernel_callback(step, step_size, expected):
     """valid inputs"""
     # given
-    kernel = LogisticGrowthKernel(
+    kernel = LogisticGrowthModel(
         alpha=1 / 5, beta=1 / 5175, start_value=1, integrator=integration_methods.euler
     )
     # when
@@ -105,7 +105,7 @@ def test_sir_kernel_labels():
     """valid inputs"""
     # given
     expected = {"step": 0, "susceptible": 1, "infected": 2, "removed": 3}
-    kernel = SIRKernel(integrator=integration_methods.euler)
+    kernel = SIRModel(integrator=integration_methods.euler)
     # when
     result = kernel.labels()
     # then
@@ -122,7 +122,7 @@ def test_sir_kernel_labels():
 def test_sir_kernel_callback(step, step_size, expected):
     """valid inputs"""
     # given
-    kernel = SIRKernel(
+    kernel = SIRModel(
         alpha=4, beta=3, population=1000, integrator=integration_methods.euler
     )
     # when

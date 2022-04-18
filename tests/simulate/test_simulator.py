@@ -7,7 +7,7 @@ import numpy as np
 
 from simulate import Simulator
 from simulate.integrators import integration_methods
-from simulate.kernels import Kernel, PredatorPreyKernel
+from simulate.models import Model, PredatorPreyModel
 
 
 def integrate(current: float, delta: float, step_size: float) -> float:
@@ -15,9 +15,9 @@ def integrate(current: float, delta: float, step_size: float) -> float:
     return current + delta * step_size
 
 
-class SampleKernel(Kernel):
+class SampleModel(Model):
     """
-    Sample Kernel
+    Sample Model
     """
 
     def __init__(self):
@@ -32,11 +32,11 @@ class SampleKernel(Kernel):
 
 def test_simple_model():
     """
-    test simulator with the SimpleKernel
+    test simulator with the SimpleModel
     """
     # given
-    simple_kernel = SampleKernel()
-    sim = Simulator(simple_kernel, 0.01, 10)
+    simple_model = SampleModel()
+    sim = Simulator(simple_model, 0.01, 10)
 
     # when
     sim.run()
@@ -50,10 +50,10 @@ def test_simple_model():
 
 def test_predator_prey_no_throw():
     """
-    Test Simulator using PredatorPreyKernel
+    Test Simulator using PredatorPreyModel
     """
     # given
-    predator_prey = PredatorPreyKernel(integrator=integration_methods.euler)
+    predator_prey = PredatorPreyModel(integrator=integration_methods.euler)
     sim = Simulator(predator_prey, 0.01, 100)
 
     # when

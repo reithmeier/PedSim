@@ -1,14 +1,14 @@
 """
-SIRKernel
+SIRModel
 """
 import numpy as np
 
-from .kernel import Kernel
+from .model import Model
 
 
-class SIRKernel(Kernel):
+class SIRModel(Model):
     """
-    SIRKernel
+    SIRModel
     simulates a SIR model
     """
 

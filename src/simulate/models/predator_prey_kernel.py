@@ -1,14 +1,14 @@
 """
-PredatorPreyKernel
+PredatorPreyModel
 """
 import numpy as np
 
-from .kernel import Kernel
+from .model import Model
 
 
-class PredatorPreyKernel(Kernel):
+class PredatorPreyModel(Model):
     """
-    PredatorPreyKernel
+    PredatorPreyModel
     simulates a predator prey model
     """
 

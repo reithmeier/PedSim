@@ -1,16 +1,16 @@
 """
-LogisticGrowthKernel
+LogisticGrowthModel
 """
 import math
 
 import numpy as np
 
-from .kernel import Kernel
+from .model import Model
 
 
-class LogisticGrowthKernel(Kernel):
+class LogisticGrowthModel(Model):
     """
-    LogisticGrowthKernel
+    LogisticGrowthModel
     simulates a logistic growth model
     """
 

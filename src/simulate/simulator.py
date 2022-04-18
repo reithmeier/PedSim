@@ -5,24 +5,24 @@ from typing import List
 
 import numpy as np
 
-from simulate.kernels import Kernel
+from simulate.models import Model
 
 
 class Simulator:
     """
     Simulator
-    performs a simulation specified by a kernel
+    performs a simulation specified by a model
     using continuous simulation
     """
 
-    def __init__(self, kernel: Kernel, step_size: float, max_steps: float):
+    def __init__(self, model: Model, step_size: float, max_steps: float):
         """
-        :param kernel: simulation kernel
+        :param model: simulation model
         :param step_size: step size
         :param max_steps: maximum step
         """
         self.__step_size = step_size
-        self.__kernel = kernel
+        self.__model = model
         self.__max_steps = max_steps
         self.__progress: List[np.ndarray] = []
 
@@ -33,7 +33,7 @@ class Simulator:
         """
         for t in np.arange(0, self.__max_steps, self.__step_size):
             # evaluate step
-            current_state = self.__kernel.simulate(t, self.__step_size)
+            current_state = self.__model.simulate(t, self.__step_size)
             # record step
             self.__progress.append(current_state)
 
