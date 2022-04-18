@@ -42,19 +42,26 @@ class SIRKernel(Kernel):
         :param step: current step
         :return: recordings [prey, predator]
         """
-        susceptible_diff = (
-            -self.__alpha * self.__susceptible * self.__infected / self.__population
-        )
-        infected_diff = (
-            self.__alpha * self.__susceptible * self.__infected / self.__population
-            - self.__beta * self.__infected
-        )
-        removed_diff = self.__beta * self.__infected
 
         self.__susceptible = self._integrator(
-            self.__susceptible, susceptible_diff, step_size
+            self.__susceptible,
+            lambda susceptible: -self.__alpha
+            * susceptible
+            * self.__infected
+            / self.__population,
+            step_size,
         )
-        self.__infected = self._integrator(self.__infected, infected_diff, step_size)
-        self.__removed = self._integrator(self.__removed, removed_diff, step_size)
+        self.__infected = self._integrator(
+            self.__infected,
+            lambda infected: self.__alpha
+            * self.__susceptible
+            * infected
+            / self.__population
+            - self.__beta * infected,
+            step_size,
+        )
+        self.__removed = self._integrator(
+            self.__removed, lambda removed: self.__beta * self.__infected, step_size
+        )
 
         return np.array([step, self.__susceptible, self.__infected, self.__removed])

@@ -38,8 +38,11 @@ class LogisticGrowthKernel(Kernel):
         :param step: current step
         :return: recordings [prey, predator]
         """
-        diff = self.__alpha * self.__value - self.__beta * (math.pow(self.__value, 2))
 
-        self.__value = self._integrator(self.__value, diff, step_size)
+        self.__value = self._integrator(
+            self.__value,
+            lambda value: self.__alpha * value - self.__beta * (math.pow(value, 2)),
+            step_size,
+        )
 
         return np.array([step, self.__value])

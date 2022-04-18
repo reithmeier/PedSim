@@ -57,7 +57,7 @@ def test_predator_prey_kernel_labels():
 @pytest.mark.parametrize(
     "step, step_size, expected",
     [
-        [1, 0.1, [1.0, 170.34, 40.08]],
+        [1, 0.1, [1.0, 170.34, 40.08136]],
         [0, 0.0, [0.0, 170.0, 40.0]],
     ],
 )
@@ -115,7 +115,7 @@ def test_sir_kernel_labels():
 @pytest.mark.parametrize(
     "step, step_size, expected",
     [
-        [1, 0.1, [1.0, 9.986004e02, 1.099600e00, 3.000000e-01]],
+        [1, 0.1, [1.0, 9.98600400e02, 1.09944016e00, 3.29832048e-01]],
         [0, 0.0, [0.0, 999.0, 1.0, 0.0]],
     ],
 )

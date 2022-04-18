@@ -47,15 +47,17 @@ class PredatorPreyKernel(Kernel):
         :param step: current step
         :return: recordings [prey, predator]
         """
-        diff_prey = (
-            self.__alpha * self.__prey - self.__beta * self.__prey * self.__predators
-        )
-        diff_predators = (
-            -self.__gamma * self.__predators
-            + self.__delta * self.__prey * self.__predators
-        )
 
-        self.__prey = self._integrator(self.__prey, diff_prey, step_size)
-        self.__predators = self._integrator(self.__predators, diff_predators, step_size)
+        self.__prey = self._integrator(
+            self.__prey,
+            lambda prey: self.__alpha * prey - self.__beta * prey * self.__predators,
+            step_size,
+        )
+        self.__predators = self._integrator(
+            self.__predators,
+            lambda predators: -self.__gamma * predators
+            + self.__delta * self.__prey * predators,
+            step_size,
+        )
 
         return np.array([step, self.__prey, self.__predators])
