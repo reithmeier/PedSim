@@ -27,8 +27,27 @@ Install Requirements
 pip install -r requirements.txt
 ````
 
+Install this project
+````shell
+pip install -e .
+````
+
 Start tox
 ````shell
 tox
 ````
 
+
+## Try the examples
+
+### Requirements
+
+* jupyter notebook
+
+### View the examples
+
+Use the jupyter notebook using 
+````shell
+jupyter notebook
+````
+Example notebooks are located in `./examples`
