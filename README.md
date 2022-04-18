@@ -56,6 +56,8 @@ Start tox
 tox
 ````
 
+## Getting Started
+
 ### Try the examples
 
 #### Requirements
@@ -72,12 +74,43 @@ jupyter notebook
 
 Example notebooks are located in `./examples`
 
+### Run a simulation
+
+````python
+# import simulation packages
+from simulate import Simulator
+from simulate.integrators import integration_methods
+from simulate.models import SIRModel
+
+# initialize the model
+model = SIRModel(
+    alpha=0.5,
+    beta=0.1,
+    population=1000,
+    # choose a integration method
+    integrator=integration_methods.runge_kutta,
+)
+
+# initialize the simulator
+sim = Simulator(model, step_size=0.01, max_steps=100)
+
+# run the simulation
+sim.run()
+result = sim.progress()
+
+# extract the result vectors using the labels dictionary
+labels = model.labels()
+steps = result[:, labels["step"]]
+susceptible = result[:, labels["susceptible"]]
+infected = result[:, labels["infected"]]
+removed = result[:, labels["removed"]]
+````
+
 ### Write your own simulation model
 
 ````python
 import numpy as np
 from simulate.models import Model
-
 
 # inherit from Model
 class MyModel(Model):
