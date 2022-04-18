@@ -37,8 +37,8 @@ class PredatorPreyKernel(Kernel):
         self.__beta = beta
         self.__gamma = gamma
         self.__delta = delta
-        self.__prey = start_prey  # prey
-        self.__predators = start_predators  # predators
+        self.__prey = start_prey
+        self.__predators = start_predators
 
     def simulate(self, step: float, step_size: float) -> np.ndarray:
         """

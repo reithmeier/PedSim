@@ -1,25 +1,22 @@
 """
-Example - Predator Prey Model
+Example - Logistic Growth Model
 """
 
 import matplotlib.pyplot as plt
 
 from simulate import Simulator
 from simulate.integrators import integration_methods
-from simulate.kernels import PredatorPreyKernel
+from simulate.kernels import LogisticGrowthKernel
 
 
 def main():
     """
-    Simulate using Predator Prey Kernel
+    Simulate using Logistic Growth Kernel
     """
-    kernel = PredatorPreyKernel(
-        alpha=0.4,
-        beta=0.008,
-        gamma=0.3,
-        delta=0.001,
-        start_prey=500,
-        start_predators=5,
+    kernel = LogisticGrowthKernel(
+        start_value=1,
+        alpha=0.2,
+        beta=0.0001,
         integrator=integration_methods.euler,
     )
     sim = Simulator(kernel, step_size=0.01, max_steps=100)
@@ -30,13 +27,11 @@ def main():
     labels = kernel.labels()
 
     steps = result[:, labels["step"]]
-    prey = result[:, labels["prey"]]
-    predators = result[:, labels["predator"]]
+    value = result[:, labels["value"]]
 
     fig = plt.figure()
     axis = fig.add_subplot()
-    axis.plot(steps, prey, color="tab:blue")
-    axis.plot(steps, predators, color="tab:orange")
+    axis.plot(steps, value, color="tab:blue")
 
     plt.show()
 
