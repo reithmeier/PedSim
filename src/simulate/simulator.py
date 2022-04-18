@@ -1,6 +1,8 @@
 """
 Simulator
 """
+from typing import List
+
 import numpy as np
 
 from simulate.kernels import Kernel
@@ -22,9 +24,9 @@ class Simulator:
         self.__callback = kernel.callback
         self.__step_size = t_step
         self.__max_steps = t_max
-        self.__progress = []
+        self.__progress: List[np.ndarray] = []
 
-    def run(self) -> np.ndarray:
+    def run(self) -> None:
         """
         perform the continuous simulation
         :return: progress

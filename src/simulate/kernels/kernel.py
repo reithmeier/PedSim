@@ -10,7 +10,7 @@ class Kernel:
     Kernel base class
     """
 
-    __val = 0
+    __val = 0.0
     __labels = {"t": 0, "val": 1}
 
     def callback(self, t, t_step: float) -> np.ndarray:

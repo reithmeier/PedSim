@@ -10,6 +10,10 @@ from simulate.kernels import Kernel, PredatorPreyKernel
 
 
 class SimpleKernel(Kernel):
+    """
+    Simple Kernel
+    """
+
     def __init__(self):
         self.__val = 0
 
@@ -23,6 +27,10 @@ class SimpleKernel(Kernel):
 
 
 def test_simple_model():
+    """
+    test simulator with the SimpleKernel
+    :return:
+    """
     # given
     simple_kernel = SimpleKernel()
     sim = Simulator(simple_kernel, 0.01, 10)
@@ -38,6 +46,10 @@ def test_simple_model():
 
 
 def test_predator_prey_no_throw():
+    """
+    Test Simulator using PredatorPreyKernel
+    :return:
+    """
     # given
     predator_prey = PredatorPreyKernel()
     sim = Simulator(predator_prey, 0.01, 100)
