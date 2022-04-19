@@ -6,9 +6,9 @@ from typing import List
 
 import numpy as np
 
+from ..model import Model
 from .actor import Actor
 from .obstacle import Obstacle
-from ..model import Model
 
 
 class SocialForceModel(Model):
@@ -18,10 +18,7 @@ class SocialForceModel(Model):
     """
 
     def __init__(
-            self,
-            integrator: callable,
-            actors: List[Actor],
-            obstacles: List[Obstacle]
+        self, integrator: callable, actors: List[Actor], obstacles: List[Obstacle]
     ):
         """
 
@@ -38,18 +35,25 @@ class SocialForceModel(Model):
 
     def __move_all(self, step_size: float):
         for actor in self.__actors:
-            goal = actor.get_next_goal()
-            position = actor.get_position()
+            goal = actor.get_goal()
+            position = actor.position
 
             # actor walks x [m/s] * step_size per step towards the goal
             movement = np.array([goal[0] - position[0], goal[1] - position[1]])
-            movement_length = math.sqrt(movement[0] * movement[0] + movement[1] * movement[1])
+            movement_length = math.sqrt(
+                movement[0] * movement[0] + movement[1] * movement[1]
+            )
             movement = movement / movement_length
             movement = movement * actor.get_max_speed()
-            # TODO: add repelling force towards other actors
-            # TODO: add repelling force towards obstacles
+            # add repelling force towards other actors
+            # add repelling force towards obstacles
+            for obstacle in self.__obstacles:
+                bbox = obstacle.bbox
+                print(bbox)
+                # check for collision
+
             next_pos = position + movement * step_size  # euler
-            actor.set_position(next_pos)
+            actor.position = next_pos
 
             # move towards next goal
             if actor.has_reached_goal():

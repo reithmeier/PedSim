@@ -2,5 +2,5 @@
 pedestrian package
 """
 
-from .social_force_model import SocialForceModel
-from .actor import Actor
+from .actor import Actor  # noqa
+from .social_force_model import SocialForceModel  # noqa

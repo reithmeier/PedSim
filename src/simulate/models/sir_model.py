@@ -13,11 +13,11 @@ class SIRModel(Model):
     """
 
     def __init__(
-            self,
-            integrator: callable,
-            alpha: float = 4.0,
-            beta: float = 3.0,
-            population: int = 1000,
+        self,
+        integrator: callable,
+        alpha: float = 4.0,
+        beta: float = 3.0,
+        population: int = 1000,
     ):
         """
         :param alpha: infection rate
@@ -46,18 +46,18 @@ class SIRModel(Model):
         self.__susceptible = self._integrator(
             self.__susceptible,
             lambda susceptible: -self.__alpha
-                                * susceptible
-                                * self.__infected
-                                / self.__population,
+            * susceptible
+            * self.__infected
+            / self.__population,
             step_size,
         )
         self.__infected = self._integrator(
             self.__infected,
             lambda infected: self.__alpha
-                             * self.__susceptible
-                             * infected
-                             / self.__population
-                             - self.__beta * infected,
+            * self.__susceptible
+            * infected
+            / self.__population
+            - self.__beta * infected,
             step_size,
         )
         self.__removed = self._integrator(
