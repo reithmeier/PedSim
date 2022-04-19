@@ -45,7 +45,7 @@ class PredatorPreyModel(Model):
         simulates a predator prey model
         :param step_size: step size
         :param step: current step
-        :return: recordings [prey, predator]
+        :return: recordings [step, prey, predator]
         """
 
         self.__prey = self._integrator(

@@ -36,7 +36,7 @@ class LogisticGrowthModel(Model):
         simulates a predator prey model
         :param step_size: step size
         :param step: current step
-        :return: recordings [prey, predator]
+        :return: recordings [step, value]
         """
 
         self.__value = self._integrator(
