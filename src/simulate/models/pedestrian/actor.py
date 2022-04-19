@@ -58,7 +58,7 @@ class Actor:
 
         return arrived_x and arrived_y
 
-    def set_next_goal(self) -> None:
+    def update_goal(self) -> None:
         if self.__current_edge < len(self.__path):
             self.__current_edge += 1
 

@@ -7,6 +7,7 @@ from typing import List
 import numpy as np
 
 from .actor import Actor
+from .obstacle import Obstacle
 from ..model import Model
 
 
@@ -19,17 +20,20 @@ class SocialForceModel(Model):
     def __init__(
             self,
             integrator: callable,
-            actors: List[Actor]
+            actors: List[Actor],
+            obstacles: List[Obstacle]
     ):
         """
 
         :param integrator:
         :param actors:
+        :param obstacles:
         """
         super().__init__(
             integrator=integrator,
             labels={"step": 0, "actors": 1},
         )
+        self.__obstacles = obstacles
         self.__actors = actors
 
     def __move_all(self, step_size: float):
@@ -42,8 +46,12 @@ class SocialForceModel(Model):
             movement_length = math.sqrt(movement[0] * movement[0] + movement[1] * movement[1])
             movement = movement / movement_length
             movement = movement * actor.get_max_speed()
+            # TODO: add repelling force towards other actors
+            # TODO: add repelling force towards obstacles
             next_pos = position + movement * step_size  # euler
             actor.set_position(next_pos)
+            if actor.has_reached_goal():
+                actor.update_goal()
 
     def simulate(self, step: float, step_size: float) -> np.ndarray:
         """
