@@ -50,6 +50,8 @@ class SocialForceModel(Model):
             # TODO: add repelling force towards obstacles
             next_pos = position + movement * step_size  # euler
             actor.set_position(next_pos)
+
+            # move towards next goal
             if actor.has_reached_goal():
                 actor.update_goal()
 
