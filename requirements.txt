@@ -7,3 +7,7 @@ pylint
 pytest-cov
 numpy
 matplotlib
+IPython
+jupyter
+ffmpeg-python
+ffmpeg
