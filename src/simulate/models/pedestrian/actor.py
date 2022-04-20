@@ -6,7 +6,7 @@ from typing import List
 
 import numpy as np
 
-from .core import Distance, Position, Speed
+from .core import Distance, Identifier, Position, Speed
 
 
 class Actor:
@@ -16,7 +16,7 @@ class Actor:
 
     def __init__(
         self,
-        identifier: int = 0,
+        identifier: Identifier = 0,
         position: Position = (0.0, 0.0),
         path: List[Position] = None,
         arrival_tolerance: Distance = 0.1,
@@ -38,6 +38,10 @@ class Actor:
         self.__current_edge = 0  # actor starts at edge 0 of the path
         self.__arrival_tolerance = arrival_tolerance
         self.__max_speed = max_speed
+
+    def get_id(self) -> Identifier:
+        """get id"""
+        return self.__id
 
     def get_path(self) -> List[Position]:
         """get path"""
@@ -71,7 +75,7 @@ class Actor:
         """
         updates the goal
         """
-        if self.__current_edge < len(self.__path):
+        if self.__current_edge < (len(self.__path) - 1):
             self.__current_edge += 1
 
     def __str__(self) -> str:

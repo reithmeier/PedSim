@@ -9,3 +9,5 @@ Speed: type = float  # m/s
 Distance: type = float  # m
 
 Position: type = ndarray  # ndarray[float, float]
+
+Identifier: type = int

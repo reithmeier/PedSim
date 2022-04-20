@@ -3,15 +3,15 @@ Pedestrian Simulation Example
 """
 from typing import List
 
-from matplotlib import animation
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib import animation
 
 from simulate.models.pedestrian import Actor, SocialForceModel
 
 actors: List[Actor] = [
-    Actor(identifier=0, position=np.array([0, 0]), path=[np.array([2, 2])]),
-    Actor(identifier=1, position=np.array([1, 1]), path=[np.array([-1, -1])]),
+    Actor(identifier=0, position=np.array([0.0, 0.0]), path=[np.array([2, 2])]),
+    Actor(identifier=1, position=np.array([1.0, 1.0]), path=[np.array([-1, -1])]),
 ]
 
 model = SocialForceModel(lambda x: x, actors, [])
@@ -25,10 +25,14 @@ writer = animation.FFMpegWriter(fps=15, metadata=metadata)
 fig, ax = plt.subplots()
 
 # plot the sine wave line
+color_map = plt.cm.get_cmap("Set1", 2)
 circles = []
+i = 0
 for _ in actors:
-    circle = plt.plot([], [], "ro", markersize=10)
-    circles.append(circle[0])
+    circle = plt.Circle((0, 0), 0.2, color=color_map(i))
+    ax.add_patch(circle)
+    circles.append(circle)
+    i += 1
 ax.set_xlim(-5, 5)
 ax.set_ylim(-5, 5)
 
@@ -41,9 +45,7 @@ def update(_):
     result = model.simulate(0, 0.01)
     j = 0
     for actor in result[labels["actors"]]:
-        x = actor.position[0]
-        y = actor.position[1]
-        circles[j].set_data(x, y)
+        circles[j].set_center(actor.position)
         j += 1
     return circles
 
