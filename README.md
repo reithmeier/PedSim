@@ -24,12 +24,14 @@ Supported numeric integration methods:
 * Euler's method
 * Heun's method
 * Runge's & Kutta's method
-
-### What is still missing?
-
 * Actor-based simulation
 * Pedestrian simulation models
-    * Social force model
+  * Social force model
+
+### What is still missing?
+* Pedestrian simulation models
+  * Social force model
+    * Repelling Obstacle Force
 
 ## Requirements
 
@@ -144,4 +146,8 @@ class MyModel(Model):
 ````
 
 
+
+## License
+
+PedSim is MIT licensed, as found in the [LICENSE](./LICENSE) file.
 
