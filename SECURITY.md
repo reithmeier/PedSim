@@ -12,7 +12,10 @@ currently being supported with security updates.
 
 ## Reporting a Vulnerability
 
-Please open an issue if you find a vulnerability. Mark the issue with the
-vulnerability label.
+To report a vulnerability please follow these steps:
+
+1. If you find a security vulnerability, open an issue using the *Security Vulnerability* template.
+2. Describe the security vulnerability in as much detail as possible.
+3. Submit the issue.
 
 Issues will be resolved afterwards. 
