@@ -15,19 +15,22 @@ Vec2D: type = ndarray  # ndarray[float, float]
 Identifier: type = int
 
 
-def length(a: Vec2D) -> float:
+def length(vec: Vec2D) -> float:
     """
     length of a 2 sized vector
-    :param a: vector
+    :param vec: vector
     :return: length
     """
-    return math.sqrt(a[0] * a[0] + a[1] * a[1])
+    return math.sqrt(vec[0] * vec[0] + vec[1] * vec[1])
 
 
-def normalize(a: Vec2D) -> Vec2D:
+def normalize(vec: Vec2D) -> Vec2D:
     """
     transforms a vector in a direction vector with length 1
-    :param a: vector to normalize
+    :param vec: vector to normalize
     :return: vector with the direction of a with length 1
     """
-    return a / length(a)
+    vector_length = length(vec)
+    if vector_length == 0.0:
+        raise ValueError(f"Vector {vec} has length of 0")
+    return vec / vector_length

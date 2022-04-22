@@ -31,7 +31,7 @@ class Actor:
         :param max_speed: maximum speed [m/s]
         :param comfort_zone: comfort zone of the actor [m]
         """
-        if path is None:
+        if path is None or len(path) == 0:
             path = [np.zeros(2, dtype=float)]
 
         self.__id = identifier
