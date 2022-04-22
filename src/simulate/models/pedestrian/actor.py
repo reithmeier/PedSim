@@ -6,7 +6,7 @@ from typing import List
 
 import numpy as np
 
-from .core import Distance, Identifier, Position, Speed
+from .core import Distance, Identifier, Speed, Vec2D
 
 
 class Actor:
@@ -17,10 +17,11 @@ class Actor:
     def __init__(
         self,
         identifier: Identifier = 0,
-        position: Position = (0.0, 0.0),
-        path: List[Position] = None,
+        position: Vec2D = np.zeros(2, dtype=float),
+        path: List[Vec2D] = None,
         arrival_tolerance: Distance = 0.1,
         max_speed: Speed = 1.3,
+        comfort_zone: Distance = 0.5,
     ):
         """
         :param position: position [m]
@@ -28,9 +29,10 @@ class Actor:
         :param arrival_tolerance: minimum distance to destination, \
          so that an arrival is determined [m]
         :param max_speed: maximum speed [m/s]
+        :param comfort_zone: comfort zone of the actor [m]
         """
         if path is None:
-            path = [np.array([0.0, 0.0])]
+            path = [np.zeros(2, dtype=float)]
 
         self.__id = identifier
         self.position = position
@@ -38,22 +40,27 @@ class Actor:
         self.__current_edge = 0  # actor starts at edge 0 of the path
         self.__arrival_tolerance = arrival_tolerance
         self.__max_speed = max_speed
+        self.__comfort_zone = comfort_zone
 
     def get_id(self) -> Identifier:
         """get id"""
         return self.__id
 
-    def get_path(self) -> List[Position]:
+    def get_path(self) -> List[Vec2D]:
         """get path"""
         return self.__path
 
-    def get_goal(self) -> Position:
+    def get_goal(self) -> Vec2D:
         """get goal"""
         return self.__path[self.__current_edge]
 
     def get_max_speed(self) -> Speed:
         """get max speed"""
         return self.__max_speed
+
+    def get_comfort_zone(self) -> Distance:
+        """get comfort zone"""
+        return self.__comfort_zone
 
     def has_reached_goal(self) -> bool:
         """

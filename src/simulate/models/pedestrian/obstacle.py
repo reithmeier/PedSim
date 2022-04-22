@@ -1,28 +1,39 @@
 """
 Obstacle
 """
-from typing import Tuple
+import numpy as np
 
-from simulate.models.pedestrian.core import Position
+from simulate.models.pedestrian.core import Distance, Vec2D
 
 
 class Obstacle:
     """
     Obstacle
+    represents a circular obstacle
     """
 
-    def __init__(self, bbox: Tuple[Position]):
+    def __init__(
+        self,
+        position: Vec2D = np.zeros(2, dtype=float),
+        radius: Distance = 0.5,
+        repelling_strength: float = 2.0,
+    ) -> None:
         """
-        :param bbox: bounding box
+        :param position: position
+        :param radius: radius
+        :param repelling_strength: repelling force multiplier
         """
-        self.bbox = bbox
+        self.position = position
+        self.__radius = radius
+        self.__repelling_strength = repelling_strength
+
+    def get_radius(self) -> Distance:
+        """get radius"""
+        return self.__radius
+
+    def get_repelling_strength(self) -> float:
+        """get repelling strength"""
+        return self.__repelling_strength
 
     def __str__(self) -> str:
-        return f"{self.bbox}"
-
-    def collides(self):
-        """
-        :return: true, if an actor collides
-        """
-        print(self.bbox)
-        return True
+        return f"{self.position} {self.__radius}"

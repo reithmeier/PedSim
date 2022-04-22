@@ -1,24 +1,42 @@
 """
 Social Force Model
 """
-import math
+
 from typing import List
 
 import numpy as np
 
 from ..model import Model
 from .actor import Actor
-from .core import Position
+from .core import Vec2D, length, normalize
 from .obstacle import Obstacle
 
 
-def length(a: Position):
+def calc_repelling_force(
+    position: Vec2D,
+    other_position: Vec2D,
+    comfort_zone: float,
+    other_comfort_zone: float,
+) -> Vec2D:
     """
-    length of a 2 sized vector
-    :param a: vector
-    :return: length
+    calculate the repelling force between 2 actors
+    or between an actor and an obstacle
+    :param position: position of the first actor
+    :param other_position: position of the second actor or the obstacle
+    :param comfort_zone: comfort zone of the first actor
+    :param other_comfort_zone: comfort zone of the second actor
+    :return: repelling force
     """
-    return math.sqrt(a[0] * a[0] + a[1] * a[1])
+    min_distance = max(comfort_zone, other_comfort_zone)  # minimum acceptable distance
+    repelling_force = other_position - position
+    distance = length(repelling_force)
+    if distance < min_distance:
+        return (
+            repelling_force
+            / distance  # normalize
+            * ((min_distance - repelling_force) / min_distance)
+        )
+    return np.zeros(2, dtype=float)
 
 
 class SocialForceModel(Model):
@@ -44,7 +62,12 @@ class SocialForceModel(Model):
         self.__actors = actors
 
     def __move_all(self, step_size: float):
+        movements: List[np.ndarray] = []
+
         for actor in self.__actors:
+            # move towards next goal
+            if actor.has_reached_goal():
+                actor.update_goal()
 
             # actor walks x [m/s] * step_size per step towards the goal
             goal_attraction_force = actor.get_goal() - actor.position
@@ -56,41 +79,51 @@ class SocialForceModel(Model):
             )
 
             # add repelling force towards other actors
-            comfort_zone = 0.5
-            other_actors_repelling_force = np.array([0.0, 0.0])
+
+            other_actors_repelling_force = np.zeros(2, dtype=float)
             for other_actor in self.__actors:
                 if other_actor.get_id() != actor.get_id():
-                    other_position = other_actor.position
-                    repelling_force = other_position - actor.position
-                    repelling_force_length = length(repelling_force)
-                    if repelling_force_length < comfort_zone:
-                        repelling_force = (
-                            repelling_force
-                            / repelling_force_length
-                            * ((comfort_zone - repelling_force) / comfort_zone)
-                            * actor.get_max_speed()
+                    other_actors_repelling_force += (
+                        calc_repelling_force(
+                            actor.position,
+                            other_actor.position,
+                            actor.get_comfort_zone(),
+                            other_actor.get_comfort_zone(),
                         )
-                        other_actors_repelling_force += repelling_force
+                        * actor.get_max_speed()
+                    )
 
             # add repelling force towards obstacles
+            obstacle_repelling_force = np.zeros(2, dtype=float)
             for obstacle in self.__obstacles:
-                bbox = obstacle.bbox
-                print(bbox)
-                # check for collision
+                obstacle_repelling_force += (
+                    calc_repelling_force(
+                        actor.position,
+                        obstacle.position,
+                        actor.get_comfort_zone(),
+                        obstacle.get_radius(),
+                    )
+                    * obstacle.get_repelling_strength()
+                )
 
             # random force
-            random_force = np.random.rand(2)
-            random_force = random_force / length(random_force)
+            random_force = normalize(
+                0.5 - np.random.rand(2)
+            )  # numbers in interval [-0.5, 0.5]
 
-            actor.position = (
-                actor.position
-                + (goal_attraction_force - other_actors_repelling_force + random_force)
-                * step_size
+            # sum up all forces
+            movements.append(
+                goal_attraction_force
+                - other_actors_repelling_force
+                - obstacle_repelling_force
+                + random_force
             )  # euler
 
-            # move towards next goal
-            if actor.has_reached_goal():
-                actor.update_goal()
+        # update positions
+        i = 0
+        for actor in self.__actors:
+            actor.position = actor.position + movements[i] * step_size
+            i += 1
 
     def simulate(self, step: float, step_size: float) -> np.ndarray:
         """
