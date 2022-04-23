@@ -18,20 +18,21 @@ Supported simulation models:
 * Logistic growth model
 * Predator prey model
 * SIR model
+* Actor-based simulation
+* Pedestrian simulation models
+  * Social force model
+
 
 Supported numeric integration methods:
 
 * Euler's method
 * Heun's method
 * Runge's & Kutta's method
-* Actor-based simulation
-* Pedestrian simulation models
-  * Social force model
+
 
 ### What is still missing?
-* Pedestrian simulation models
-  * Social force model
-    * Repelling Obstacle Force
+* Other pedestrian simulation models
+  
 
 ## Requirements
 
