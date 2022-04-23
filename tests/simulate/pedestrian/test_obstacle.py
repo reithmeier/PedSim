@@ -1,3 +1,6 @@
+"""
+Obstacle tests
+"""
 import math
 
 import numpy as np
@@ -16,6 +19,7 @@ from simulate.models.pedestrian.obstacle import Obstacle
     ],
 )
 def test_init(position, radius, repelling_strength):
+    """valid inputs"""
     # given
     # when
     result = Obstacle(

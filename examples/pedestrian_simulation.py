@@ -15,25 +15,25 @@ actors: List[Actor] = [
         identifier=0,
         position=np.array([-1.0, -1.0]),
         path=[np.array([1.0, 1.0])],
-        max_speed=1.0,
+        max_speed=1.5,
     ),
     Actor(
         identifier=1,
         position=np.array([1.0, 1.0]),
         path=[np.array([-1.0, -1.0])],
-        max_speed=1.0,
+        max_speed=1.5,
     ),
     Actor(
         identifier=2,
         position=np.array([1.0, -1.0]),
         path=[np.array([-1.0, 1.0])],
-        max_speed=1.0,
+        max_speed=1.5,
     ),
     Actor(
         identifier=3,
         position=np.array([-1.0, 1.0]),
         path=[np.array([1.0, -1.0])],
-        max_speed=1.0,
+        max_speed=1.5,
     ),
 ]
 
@@ -85,6 +85,7 @@ def update(_):
     j = 0
     for act in actors:
         actor_circles[j].set_center(act.position)
+        j += 1
     return actor_circles
 
 

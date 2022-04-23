@@ -41,6 +41,10 @@ class Actor:
         self.__arrival_tolerance = arrival_tolerance
         self.__max_speed = max_speed
         self.__comfort_zone = comfort_zone
+        self.__arrived = False
+        # starts at first goal
+        if self.has_reached_goal():
+            self.update_goal()
 
     def get_id(self) -> Identifier:
         """get id"""
@@ -61,6 +65,10 @@ class Actor:
     def get_comfort_zone(self) -> Distance:
         """get comfort zone"""
         return self.__comfort_zone
+
+    def has_arrived(self) -> bool:
+        """has arrived"""
+        return self.__arrived
 
     def has_reached_goal(self) -> bool:
         """
@@ -84,6 +92,8 @@ class Actor:
         """
         if self.__current_edge < (len(self.__path) - 1):
             self.__current_edge += 1
+        else:
+            self.__arrived = True
 
     def __str__(self) -> str:
         return f"{self.__id} {self.position} {self.get_goal()} {self.__max_speed}"
