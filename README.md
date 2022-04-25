@@ -81,17 +81,16 @@ Example notebooks are located in `./examples`
 
 ````python
 # import simulation packages
-from simulate import Simulator
-from simulate.integrators import integration_methods
+from simulate import Simulator, integrators
 from simulate.models import SIRModel
 
 # initialize the model
 model = SIRModel(
-    alpha=0.5,
-    beta=0.1,
-    population=1000,
-    # choose a integration method
-    integrator=integration_methods.runge_kutta,
+  alpha=0.5,
+  beta=0.1,
+  population=1000,
+  # choose a integration method
+  integrator=integration_methods.runge_kutta,
 )
 
 # initialize the simulator

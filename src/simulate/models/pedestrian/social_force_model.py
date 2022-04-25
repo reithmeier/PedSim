@@ -6,6 +6,7 @@ from typing import List
 
 import numpy as np
 
+from ... import integrators
 from ..model import Model
 from .actor import Actor
 from .core import calc_repelling_force, normalize, random_vector
@@ -18,16 +19,13 @@ class SocialForceModel(Model):
     simulates a social force model
     """
 
-    def __init__(
-        self, integrator: callable, actors: List[Actor], obstacles: List[Obstacle]
-    ) -> None:
+    def __init__(self, actors: List[Actor], obstacles: List[Obstacle]) -> None:
         """
-        :param integrator: integrator method
         :param actors: actors
         :param obstacles: obstacles
         """
         super().__init__(
-            integrator=integrator,
+            integrator=integrators.euler,
             labels={"step": 0, "actors": 1},
         )
         self.__obstacles = obstacles
@@ -100,6 +98,11 @@ class SocialForceModel(Model):
         i = 0
         for actor in self.__actors:
             # currently, euler is enforced
-            actor.position = actor.position + movements[i] * step_size
+            # actor.position = actor.position + movements[i] * step_size
+            actor.position = self._integrator(
+                [actor.position, movements[i]],
+                lambda positions: positions[0] + positions[1],
+                step_size,
+            )
             i += 1
         return np.array([step, self.__actors], dtype=object)

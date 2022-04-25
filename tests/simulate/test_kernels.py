@@ -4,7 +4,7 @@ Kernel Tests
 import numpy as np
 import pytest
 
-from simulate.integrators import integration_methods
+from simulate import integrators
 from simulate.models import (LogisticGrowthModel, Model, PredatorPreyModel,
                              SIRModel)
 
@@ -47,7 +47,7 @@ def test_predator_prey_kernel_labels():
     """valid inputs"""
     # given
     expected = {"step": 0, "prey": 1, "predator": 2}
-    kernel = PredatorPreyModel(integrator=integration_methods.euler)
+    kernel = PredatorPreyModel(integrator=integrators.euler)
     # when
     result = kernel.labels()
     # then
@@ -64,7 +64,7 @@ def test_predator_prey_kernel_labels():
 def test_predator_prey_kernel_callback(step, step_size, expected):
     """valid inputs"""
     # given
-    kernel = PredatorPreyModel(integration_methods.euler)
+    kernel = PredatorPreyModel(integrators.euler)
     # when
     result = kernel.simulate(step, step_size)
     # then
@@ -75,7 +75,7 @@ def test_logistic_growth_kernel_labels():
     """valid inputs"""
     # given
     expected = {"step": 0, "value": 1}
-    kernel = LogisticGrowthModel(integrator=integration_methods.euler)
+    kernel = LogisticGrowthModel(integrator=integrators.euler)
     # when
     result = kernel.labels()
     # then
@@ -93,7 +93,7 @@ def test_logistic_growth_kernel_callback(step, step_size, expected):
     """valid inputs"""
     # given
     kernel = LogisticGrowthModel(
-        alpha=1 / 5, beta=1 / 5175, start_value=1, integrator=integration_methods.euler
+        alpha=1 / 5, beta=1 / 5175, start_value=1, integrator=integrators.euler
     )
     # when
     result = kernel.simulate(step, step_size)
@@ -105,7 +105,7 @@ def test_sir_kernel_labels():
     """valid inputs"""
     # given
     expected = {"step": 0, "susceptible": 1, "infected": 2, "removed": 3}
-    kernel = SIRModel(integrator=integration_methods.euler)
+    kernel = SIRModel(integrator=integrators.euler)
     # when
     result = kernel.labels()
     # then
@@ -122,9 +122,7 @@ def test_sir_kernel_labels():
 def test_sir_kernel_callback(step, step_size, expected):
     """valid inputs"""
     # given
-    kernel = SIRModel(
-        alpha=4, beta=3, population=1000, integrator=integration_methods.euler
-    )
+    kernel = SIRModel(alpha=4, beta=3, population=1000, integrator=integrators.euler)
     # when
     result = kernel.simulate(step, step_size)
     # then

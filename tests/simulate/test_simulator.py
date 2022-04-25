@@ -5,8 +5,7 @@ import math
 
 import numpy as np
 
-from simulate import Simulator
-from simulate.integrators import integration_methods
+from simulate import Simulator, integrators
 from simulate.models import Model, PredatorPreyModel
 
 
@@ -53,7 +52,7 @@ def test_predator_prey_no_throw():
     Test Simulator using PredatorPreyModel
     """
     # given
-    predator_prey = PredatorPreyModel(integrator=integration_methods.euler)
+    predator_prey = PredatorPreyModel(integrator=integrators.euler)
     sim = Simulator(predator_prey, 0.01, 100)
 
     # when

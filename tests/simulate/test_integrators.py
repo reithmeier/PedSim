@@ -5,7 +5,7 @@ import math
 
 import pytest
 
-from simulate.integrators import integration_methods
+from simulate import integrators
 
 
 @pytest.mark.parametrize(
@@ -20,7 +20,7 @@ def test_euler(current, step_size, expected):
     """valid inputs"""
     # given
     # when
-    result = integration_methods.euler(
+    result = integrators.euler(
         current=current, diff_func=lambda v: v, step_size=step_size
     )
 
@@ -40,7 +40,7 @@ def test_heun(current, step_size, expected):
     """valid inputs"""
     # given
     # when
-    result = integration_methods.heun(
+    result = integrators.heun(
         current=current, diff_func=lambda v: v, step_size=step_size
     )
 
@@ -60,7 +60,7 @@ def test_runge_kutta(current, step_size, expected):
     """valid inputs"""
     # given
     # when
-    result = integration_methods.runge_kutta(
+    result = integrators.runge_kutta(
         current=current, diff_func=lambda v: v, step_size=step_size
     )
 

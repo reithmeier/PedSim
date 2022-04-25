@@ -13,7 +13,7 @@ def test_init():
     """test empty init"""
     # given
     # when
-    model = SocialForceModel(integrator=lambda a: a, actors=[], obstacles=[])
+    model = SocialForceModel(actors=[], obstacles=[])
     # then
     assert model.labels()["step"] == 0
     assert model.labels()["actors"] == 1
@@ -36,7 +36,7 @@ def test_step_no_movement():
             path=[np.zeros(2, dtype=float)],
         )
     ]
-    model = SocialForceModel(integrator=lambda a: a, actors=actors, obstacles=[])
+    model = SocialForceModel(actors=actors, obstacles=[])
     labels = model.labels()
 
     # when
@@ -68,7 +68,7 @@ def test_step_movement():
     ]
     start_positions = [np.zeros(2, dtype=float), np.array([0.1, 0.1])]
 
-    model = SocialForceModel(integrator=lambda a: a, actors=actors, obstacles=[])
+    model = SocialForceModel(actors=actors, obstacles=[])
 
     # when
     model.simulate(0, 0.01)
@@ -97,7 +97,7 @@ def test_step_movement_on_top_of_each_other():
     ]
     start_positions = [np.zeros(2, dtype=float), np.zeros(2, dtype=float)]
 
-    model = SocialForceModel(integrator=lambda a: a, actors=actors, obstacles=[])
+    model = SocialForceModel(actors=actors, obstacles=[])
 
     # when
     model.simulate(0, 0.01)
@@ -122,7 +122,7 @@ def test_step_with_obstacle_no_movement():
     obstacles = [Obstacle(position=np.array([10.0, 10.0]), radius=1.0)]
     start_positions = [np.zeros(2, dtype=float)]
 
-    model = SocialForceModel(integrator=lambda a: a, actors=actors, obstacles=obstacles)
+    model = SocialForceModel(actors=actors, obstacles=obstacles)
 
     # when
     model.simulate(0, 0.01)
@@ -147,7 +147,7 @@ def test_step_with_obstacle_movement():
     obstacles = [Obstacle(position=np.array([0.5, 0.5]), radius=1.0)]
     start_positions = [np.zeros(2, dtype=float)]
 
-    model = SocialForceModel(integrator=lambda a: a, actors=actors, obstacles=obstacles)
+    model = SocialForceModel(actors=actors, obstacles=obstacles)
 
     # when
     model.simulate(0, 0.01)
@@ -172,7 +172,7 @@ def test_step_with_obstacle_on_top_of_each_other():
     obstacles = [Obstacle(position=np.zeros(2, dtype=float), radius=1.0)]
     start_positions = [np.zeros(2, dtype=float)]
 
-    model = SocialForceModel(integrator=lambda a: a, actors=actors, obstacles=obstacles)
+    model = SocialForceModel(actors=actors, obstacles=obstacles)
 
     # when
     model.simulate(0, 0.01)
