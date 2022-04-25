@@ -1,5 +1,5 @@
 """
-Kernels Package
+Models Package
 """
 
 from .logistic_growth_model import LogisticGrowthModel  # noqa
